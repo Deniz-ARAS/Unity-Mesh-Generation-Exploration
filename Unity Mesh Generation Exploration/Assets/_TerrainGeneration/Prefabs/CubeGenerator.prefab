@@ -98,4 +98,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meshFilter: {fileID: 7989512904068621813}
   meshRenderer: {fileID: 6519220234885701170}
-  cubeSize: 1
+  cubeSize: 4
+  cubeSubDivCount: 2

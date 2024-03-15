@@ -5,9 +5,9 @@ using UnityEngine;
 /// 
 /// To-Do:
 /// 
-/// - Add a real time editor for the generation.
-/// - Try to generate the mesh without flipping its normals.
-/// - Try to generate new points inside of the circle to make a quad grid. (Check out the Blender's "Grid Fill" generation.)
+/// - Add a real time editor for the generation. ---Done
+/// - Try to generate the mesh without flipping its normals. ---Done
+/// - Try to generate new points inside of the circle to make a quad grid. (Check out the Blender's "Grid Fill" generation.) --This seems too complicated.
 /// 
 /// 
 /// </summary>
@@ -21,11 +21,15 @@ public class CircleGenerator : MonoBehaviour
     private Mesh mesh;
     private Vector3[] vertices;
     private int[] triangles;
-    [SerializeField] int CircleResolution = 36;
-    [SerializeField] float circleDiameter = 1f;
+    [SerializeField, Range(3, 100)] int CircleResolution = 36;
+    [SerializeField , Range(0.1f, 100f)] float circleDiameter = 1f;
 
     [SerializeField] float NoiseStrenght = 0.25f;
     [SerializeField] float NoiseMagnitude = 2f;
+
+    private int  prevCircleResolution;
+    private float prevcircleDiameter;
+
 
     void Start()
     {
@@ -33,7 +37,19 @@ public class CircleGenerator : MonoBehaviour
         meshFilter.mesh = mesh;
         CreateCircle();
         UpdateCircle();
-        FlipNormals(mesh);
+        //FlipNormals(mesh);
+    }
+
+    private void Update()
+    {
+        if (CircleResolution != prevCircleResolution || circleDiameter != prevcircleDiameter)
+        {
+            CreateCircle();
+            UpdateCircle();
+            //FlipNormals(mesh);
+            prevCircleResolution = CircleResolution;
+            prevcircleDiameter = circleDiameter;
+        }
     }
 
     private void CreateCircle()
@@ -58,8 +74,8 @@ public class CircleGenerator : MonoBehaviour
         {
             int index = i * 3;
             triangles[index] = 0;
-            triangles[index + 1] = i + 1;
-            triangles[index + 2] = i < CircleResolution - 1 ? i + 2 : 1;
+            triangles[index + 1] = i < CircleResolution - 1 ? i + 2 : 1;
+            triangles[index + 2] = i + 1;
 
         }
     }
