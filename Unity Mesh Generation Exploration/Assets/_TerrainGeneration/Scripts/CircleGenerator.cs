@@ -1,5 +1,17 @@
 using UnityEngine;
 
+
+/// <summary>
+/// 
+/// To-Do:
+/// 
+/// - Add a real time editor for the generation.
+/// - Try to generate the mesh without flipping its normals.
+/// - Try to generate new points inside of the circle to make a quad grid. (Check out the Blender's "Grid Fill" generation.)
+/// 
+/// 
+/// </summary>
+
 [RequireComponent(typeof(MeshFilter))]
 public class CircleGenerator : MonoBehaviour
 {
